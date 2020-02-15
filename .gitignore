@@ -55,6 +55,7 @@ _build
 /ocamlopt
 /ocamlopt.opt
 /ocamlnat
+/wasi
 
 # specific files and patterns in sub-directories
 
