@@ -49,6 +49,11 @@ CAMLexport void caml_debugger_cleanup_fork(void)
 {
 }
 
+opcode_t caml_debugger_saved_instruction(code_t pc)
+{
+    return 0;
+}
+
 #else
 
 #ifdef HAS_UNISTD

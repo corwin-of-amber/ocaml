@@ -1093,3 +1093,13 @@ config.status:
 	@echo "	make install"
 	@echo "should work."
 	@false
+
+
+# Additions for WebAssembly port
+.PHONY: wasm
+wasm:
+	cp wasi-preconf/runtime/*.h runtime/caml/
+	make -C runtime clean
+	wasi-kit make -C runtime ocamlrun
+	# (optional) build shared library stubs
+	./compile-shlibs

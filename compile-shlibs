@@ -1,0 +1,14 @@
+# wasi does not support shared libraries yet :((
+# /opt/wasi-sdk/bin/clang -emit-llvm -S otherlibs/str/strstubs.c -o otherlibs/str/strstubs.ll -Iruntime
+# /opt/wasi-sdk/bin/clang -o dllcamlstr.wasm -Wl,--allow-undefined -fPIC -Wl,--shared otherlibs/str/strstubs.c -Iruntime
+
+WASI_SDK=${WASI_SDK:=/opt/wasi-sdk}
+
+# @oops macOS specific?
+CCSHARED="clang -shared -flat_namespace -undefined suppress"
+CCFLAGS="-Iruntime"
+
+make -C otherlibs/str clean && wasi-kit make -C otherlibs/str
+make -C otherlibs/unix clean && wasi-kit make -C otherlibs/unix
+# threads: stubs only
+wasi-kit $CCSHARED $CCFLAGS wasi-preconf/otherlibs/st_stubs.c -o dllthreads.so

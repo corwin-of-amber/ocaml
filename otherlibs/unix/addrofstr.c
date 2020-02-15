@@ -89,6 +89,12 @@ CAMLprim value unix_inet_addr_of_string(value s)
 #endif
 }
 
+#elif defined(__wasi__)
+
+CAMLprim value unix_inet_addr_of_string(value s) {
+  return Atom(0); // sorry
+}
+
 #else
 
 CAMLprim value unix_inet_addr_of_string(value s)

@@ -38,6 +38,16 @@ _ocamltestd
 .merlin
 _build
 
+*.wo
+*.wa
+*.wasm
+*.wat
+*.tgz
+/base.zip
+/package
+/wasi
+node_modules
+
 # local to root directory
 
 /Makefile.build_config
@@ -55,6 +65,7 @@ _build
 /ocamlopt
 /ocamlopt.opt
 /ocamlnat
+/wasi
 
 # specific files and patterns in sub-directories
 
