@@ -424,8 +424,9 @@ static void intern_rec(value *dest)
         v = Val_long((intnat) (read64u()));
         break;
 #else
-        intern_cleanup();
-        caml_failwith("input_value: integer too large");
+        read32s(); v = Val_long(read32s());    // (ouch)
+        /*intern_cleanup();
+        caml_failwith("input_value: integer too large");*/
         break;
 #endif
       case CODE_SHARED8:

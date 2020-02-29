@@ -38,6 +38,9 @@ _ocamltestd
 .merlin
 _build
 
+*.wasm
+*.wat
+
 # local to root directory
 
 /Makefile.common
@@ -56,6 +59,7 @@ _build
 /ocamlopt.opt
 /ocamlnat
 /wasi
+/dist.zip
 
 # specific files and patterns in sub-directories
 

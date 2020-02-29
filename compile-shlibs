@@ -4,3 +4,5 @@
 
 source ~/var/ext/emsdk/emsdk_env.sh
 emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/strstubs.c -o dllcamlstr.wasm -Iruntime
+emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/unixstubs.c -o dllunix.wasm -Iruntime -include wasi/etc.h
+emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/st_stubs.c -o dllthreads.wasm -Iruntime -include wasi/etc.h
