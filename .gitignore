@@ -35,6 +35,11 @@ _ocamltest
 _ocamltestd
 *.odoc
 
+*.wo
+*.wa
+*.wasm
+*.wat
+
 # local to root directory
 
 /ocamlc

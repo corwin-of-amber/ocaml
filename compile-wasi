@@ -1,0 +1,9 @@
+# opt flags:
+OPT='-O2 -fno-strict-aliasing -fwrapv -Wall -Werror -fno-common'
+
+make -C byterun CC='/opt/wasi-sdk/bin/clang' MKLIB='/opt/wasi-sdk/bin/ar rc $(1) $(2)'  \
+    CFLAGS="-g -Os -Wall -I../wasi -include ../wasi/etc.h -fblocks" \
+    MKEXE='$(CC) -Wl,-allow-undefined -Wl,--import-table -Wl,--export-all' EXE=.wasm \
+    ocamlrun.wasm
+
+
