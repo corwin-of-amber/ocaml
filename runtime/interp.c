@@ -190,6 +190,13 @@ sp is a local copy of the global variable caml_extern_sp. */
 static intnat caml_bcodcount;
 #endif
 
+#ifdef __wasi__
+#include <wasi/control.h>
+#define __wasi_block __block
+#else
+#define __wasi_block
+#endif
+
 /* The interpreter itself */
 
 value caml_interprete(code_t prog, asize_t prog_size)
@@ -199,9 +206,9 @@ value caml_interprete(code_t prog, asize_t prog_size)
   register value * sp SP_REG;
   register value accu ACCU_REG;
 #else
-  register code_t pc;
-  register value * sp;
-  register value accu;
+  __wasi_block register code_t pc;
+  __wasi_block register value * sp;
+  __wasi_block register value accu;
 #endif
 #if defined(THREADED_CODE) && defined(ARCH_SIXTYFOUR) && !defined(ARCH_CODE32)
 #ifdef JUMPTBL_BASE_REG
@@ -210,32 +217,26 @@ value caml_interprete(code_t prog, asize_t prog_size)
   register char * jumptbl_base;
 #endif
 #endif
-  value env;
-  intnat extra_args;
+  __block value env;
+  __block intnat extra_args;
   struct longjmp_buffer * initial_external_raise;
   intnat initial_sp_offset;
   /* volatile ensures that initial_local_roots and saved_pc
      will keep correct value across longjmp */
   struct caml__roots_block * volatile initial_local_roots;
-  volatile code_t saved_pc = NULL;
-  struct longjmp_buffer raise_buf;
+  __wasi_block volatile code_t saved_pc = NULL;
+  __wasi_block struct longjmp_buffer raise_buf;
 #ifndef THREADED_CODE
-  opcode_t curr_instr;
+  __wasi_block opcode_t curr_instr;
 #endif
 
+#ifndef __wasi__
 #ifdef THREADED_CODE
   static void * jumptable[] = {
 #    include "caml/jumptbl.h"
   };
 #endif
-
-  if (prog == NULL) {           /* Interpreter is initializing */
-#ifdef THREADED_CODE
-    caml_instr_table = (char **) jumptable;
-    caml_instr_base = Jumptbl_base;
 #endif
-    return Val_unit;
-  }
 
 #if defined(THREADED_CODE) && defined(ARCH_SIXTYFOUR) && !defined(ARCH_CODE32)
   jumptbl_base = Jumptbl_base;
@@ -246,7 +247,18 @@ value caml_interprete(code_t prog, asize_t prog_size)
   caml_callback_depth++;
   saved_pc = NULL;
 
+#ifdef __wasi__
+__control_setjmp(raise_buf.buf, ^ void (int val) {
+#ifdef THREADED_CODE
+  static void * jumptable[] = {
+#    include "caml/jumptbl.h"
+  };
+#endif
+
+  if (val) {
+#else
   if (sigsetjmp(raise_buf.buf, 0)) {
+#endif
     caml_local_roots = initial_local_roots;
     sp = caml_extern_sp;
     accu = caml_exn_bucket;
@@ -255,6 +267,18 @@ value caml_interprete(code_t prog, asize_t prog_size)
         /* +2 adjustment for the sole purpose of backtraces */
     goto raise_exception;
   }
+  if (prog == NULL) {           /* Interpreter is initializing */
+#ifdef THREADED_CODE
+    caml_instr_table = (char **) jumptable;
+    caml_instr_base = Jumptbl_base;
+#endif
+#ifdef __wasi__
+    accu = Val_unit; return;
+#else
+    return Val_unit;
+#endif
+  }
+  
   caml_external_raise = &raise_buf;
 
   sp = caml_extern_sp;
@@ -864,7 +888,11 @@ value caml_interprete(code_t prog, asize_t prog_size)
         caml_extern_sp = (value *) ((char *) caml_stack_high
                                     - initial_sp_offset);
         caml_callback_depth--;
+#ifdef __wasi__
+        accu = Make_exception_result(accu); return;
+#else
         return Make_exception_result(accu);
+#endif
       }
       sp = caml_trapsp;
       pc = Trap_pc(sp);
@@ -1126,7 +1154,11 @@ value caml_interprete(code_t prog, asize_t prog_size)
       caml_external_raise = initial_external_raise;
       caml_extern_sp = sp;
       caml_callback_depth--;
+#ifdef __wasi__
+      return;
+#else
       return accu;
+#endif
 
     Instruct(EVENT):
       if (--caml_event_count == 0) {
@@ -1153,6 +1185,10 @@ value caml_interprete(code_t prog, asize_t prog_size)
 #endif
     }
   }
+#endif
+#ifdef __wasi__
+});
+  return accu;
 #endif
 }
 
