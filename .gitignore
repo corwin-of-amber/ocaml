@@ -42,6 +42,7 @@ _build
 *.wa
 *.wasm
 *.wat
+/dist.zip
 
 # local to root directory
 
