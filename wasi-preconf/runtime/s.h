@@ -38,7 +38,7 @@
    undefined if signal handlers have the System V semantics: the signal
    resets the behavior to default. */
 
-// #define SUPPORT_DYNAMIC_LINKING 1
+#define SUPPORT_DYNAMIC_LINKING 1
 
 /* Define SUPPORT_DYNAMIC_LINKING if dynamic loading of C stub code
    via dlopen() is available. */

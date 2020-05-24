@@ -213,16 +213,20 @@ static intnat caml_bcodcount;
 
 value caml_interprete(code_t prog, asize_t prog_size)
 {
-#ifndef __wasi__
 #ifdef PC_REG
   register code_t pc PC_REG;
   register value * sp SP_REG;
   register value accu ACCU_REG;
+#elif defined __wasi__
+  __block code_t pc;
+  __block value * sp;
+  __block value accu;
 #else
   register code_t pc;
   register value * sp;
   register value accu;
-#endif
+#undef __block
+#define __block
 #endif
 #if defined(THREADED_CODE) && defined(ARCH_SIXTYFOUR) && !defined(ARCH_CODE32)
 #ifdef JUMPTBL_BASE_REG
@@ -231,39 +235,16 @@ value caml_interprete(code_t prog, asize_t prog_size)
   register char * jumptbl_base;
 #endif
 #endif
-#ifndef __wasi__
-  value env;
-  intnat extra_args;
-#endif
+  __block value env;
+  __block intnat extra_args;
   struct longjmp_buffer * initial_external_raise;
   intnat initial_sp_offset;
   /* volatile ensures that initial_local_roots
      will keep correct value across longjmp */
   struct caml__roots_block * volatile initial_local_roots;
-#ifndef __wasi__
-  struct longjmp_buffer raise_buf;
-#endif
+  __block struct longjmp_buffer raise_buf;
 #ifndef THREADED_CODE
-  opcode_t curr_instr;
-#endif
-
-#ifdef __wasi__
-  struct ar {
-    code_t pc;
-    value * sp;
-    value accu;
-    value env;
-    intnat extra_args;
-    struct longjmp_buffer raise_buf;
-  } *ar = alloca(sizeof(struct ar));
-
-  #define pc (ar->pc)
-  #define sp (ar->sp)
-  #define accu (ar->accu)
-  #define env (ar->env)
-  #define extra_args (ar->extra_args)
-  #define raise_buf (ar->raise_buf)
-
+  __block opcode_t curr_instr;
 #endif
 
 #ifndef __wasi__
