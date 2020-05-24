@@ -38,6 +38,11 @@ _ocamltestd
 .merlin
 _build
 
+*.wo
+*.wa
+*.wasm
+*.wat
+
 # local to root directory
 
 /Makefile.common

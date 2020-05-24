@@ -1,0 +1,11 @@
+{
+    "*": {
+        "args": ["-fblocks"]
+    },
+    "ocamlrun": {
+        "output": "ocamlrun.wasm",
+        "args": [
+            "-Wl,-allow-undefined", "-Wl,--import-table", "-Wl,--export-all"],
+        "noargs": ["re:^-Wl"]
+    }
+}
