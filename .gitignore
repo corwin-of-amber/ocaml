@@ -43,7 +43,9 @@ _build
 *.wasm
 *.wat
 /wasi
-/dist.zip
+/package
+/base.zip
+/*.tar.gz
 
 # local to root directory
 

@@ -1,0 +1,12 @@
+{
+  "name": "ocaml-wasm",
+  "version": "4.09.2",
+  "description": "OCaml runtime compiled to WebAssembly",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corwin-of-amber/ocaml-wasm.git#wasm-4.09"
+  },
+  "author": "",
+  "license": "LGPL-2+"
+}
