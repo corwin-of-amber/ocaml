@@ -9,8 +9,9 @@ To run a compiled bytecode file, create a wasi-kernel `ExecCore` and pass the fi
 ```js
 import { ExecCore } from 'wasi-kernel';
 
-var core = new ExecCore();
-core.on('tty', console.log); // to see the output
+var core = new ExecCore({tty: true}),
+    td = new TextDecoder('utf-8');
+core.tty.on('data', b => console.log(td.decode(b))); // to see the output
 core.wasmFs.fs.writeFileSync('/my_program.bc', bytecode);
 core.start('ocamlrun.wasm', ['ocamlrun', '/my_program.bc']);
 ```

@@ -1,0 +1,12 @@
+{
+  "name": "@ocaml-wasm/4.07.base",
+  "version": "4.07.2",
+  "description": "OCaml standard library + ocaml + ocamlc (byte)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corwin-of-amber/ocaml-wasm.git"
+  },
+  "author": "",
+  "license": "LGPL-2+"
+}

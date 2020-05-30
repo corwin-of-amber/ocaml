@@ -39,6 +39,10 @@ _ocamltestd
 *.wa
 *.wasm
 *.wat
+/package
+/wasi
+/base.zip
+/*.tar.gz
 
 # local to root directory
 
