@@ -1,0 +1,11 @@
+{
+    "name": "ocaml-wasm-test",
+    "main": "dist/index.html",
+    "browserslist": [
+        "Chrome 78"
+    ],
+    "dependencies": {
+        "jszip-unzip": "^3.4.0-0",
+        "wasi-kernel": "https://github.com/corwin-of-amber/wasi-kernel/releases/download/v0.1.0/wasi-kernel-0.1.0.tgz"
+    }
+}

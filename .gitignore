@@ -42,7 +42,11 @@ _build
 *.wa
 *.wasm
 *.wat
-/dist.zip
+*.tar.gz
+/base.zip
+/package
+/wasi
+node_modules
 
 # local to root directory
 
