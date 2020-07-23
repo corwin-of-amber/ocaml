@@ -1,6 +1,6 @@
 {
   "name": "@ocaml-wasm/4.09.base",
-  "version": "4.09.2",
+  "version": "4.09.2-1",
   "description": "OCaml standard library + ocaml + ocamlc (byte)",
   "main": "index.js",
   "repository": {

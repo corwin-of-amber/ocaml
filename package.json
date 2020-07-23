@@ -1,7 +1,7 @@
 {
   "name": "ocaml-wasm",
-  "version": "4.09.2",
-  "description": "OCaml runtime compiled to WebAssembly",
+  "version": "4.09.2-1",
+  "description": "OCaml runtime compiled to WebAssembly (wasi-sdk-11)",
   "main": "index.js",
   "repository": {
     "type": "git",
