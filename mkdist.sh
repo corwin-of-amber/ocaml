@@ -1,3 +1,5 @@
+export COPYFILE_DISABLE=1
+
 rm -f base.zip
 zip -j base.zip ocaml ocamlc stdlib/*.cm[ai] stdlib/*.cmo otherlibs/str/*.cm[ai] otherlibs/unix/*.cm[ai] otherlibs/systhreads/*.cm[ai]
 

@@ -46,6 +46,7 @@ _build
 /package
 /base.zip
 /*.tar.gz
+node_modules
 
 # local to root directory
 

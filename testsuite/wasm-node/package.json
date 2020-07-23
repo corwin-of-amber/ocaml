@@ -1,0 +1,12 @@
+{
+    "name": "g",
+    "main": "dist/index.html",
+    "browserslist": [
+        "Chrome 78"
+    ],
+    "dependencies": {
+        "@ocaml-wasm/4.08.base": "^4.8.1-rc1",
+        "ocaml-wasm": "^4.8.1-rc1",
+        "wasi-kernel": "file:../../../../../../workspace/Web.OS.WASI/wasi-kernel-0.1.0.tgz"
+    }
+}
