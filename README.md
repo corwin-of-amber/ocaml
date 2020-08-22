@@ -5,6 +5,8 @@ The core distribution includes `ocamlrun` (compiled as `ocamlrun.wasm`), and stu
 This allows running OCaml bytecode binaries in a WebAssembly container, including in a browser.
 They were built using [wasi-sdk](https://github.com/WebAssembly/wasi-sdk), and depend on [Wasmer-JS](https://github.com/wasmerio/wasmer-js) and [wasi-kernel](https://github.com/corwin-of-amber/wasi-kernel) for POSIX-like headers and runtime.
 
+The current version is compatible with wasi-sdk 11 and wasi-kernel 0.1.1.
+
 To run a compiled bytecode file, create a wasi-kernel `ExecCore` and pass the filename as an argument:
 ```js
 import { ExecCore } from 'wasi-kernel';
@@ -54,5 +56,5 @@ wasi-kit make -C runtime ocamlrun
 ./compile-shlibs
 ```
 
-*Note:* currently, these are built with Emscripten, since shared-library support in WASI is still incomplete.
-You will need to update the script to the location of `emdsk_env.sh` on your system.
+*Note:* The script invokes `clang` directly from wasi-sdk. It defaults to `/opt/wasi-sdk/bin/clang`.
+If wasi-sdk is installed in a different location, update the `CC=` line in `compile-shlibs`.

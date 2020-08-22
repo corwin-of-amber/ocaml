@@ -1,0 +1,12 @@
+# wasi does not support shared libraries yet :((
+# /opt/wasi-sdk/bin/clang -emit-llvm -S otherlibs/str/strstubs.c -o otherlibs/str/strstubs.ll -Iruntime
+# /opt/wasi-sdk/bin/clang -o dllcamlstr.wasm -Wl,--allow-undefined -fPIC -Wl,--shared otherlibs/str/strstubs.c -Iruntime
+
+if [ ! -d ./wasi ]
+  then ln -s /tmp/wasi-kit-hijack/include ./wasi
+fi
+
+source ~/var/ext/emsdk/emsdk_env.sh
+emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/strstubs.c -o dllcamlstr.wasm -Iruntime
+emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/unixstubs.c -o dllunix.wasm -Iruntime -include wasi/etc.h
+emcc -Os -s SIDE_MODULE=1 wasi-preconf/otherlibs/st_stubs.c -o dllthreads.wasm -Iruntime -include wasi/etc.h
