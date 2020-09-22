@@ -9,7 +9,7 @@ mkdir -p package/bin
 cp *.wasm runtime/ocamlrun.wasm package/bin/
 cp package.json README.md package/
 touch package/index.js
-tar zcf ocaml-wasm-4.08.1.tar.gz package
+npm pack ./package
 
 
 rm -rf package
@@ -17,4 +17,4 @@ mkdir -p package
 cp package.base.json package/package.json
 cp README.md base.zip package/
 touch package/index.js
-tar zcf ocaml-wasm-4.08.1-base.tar.gz package
+npm pack ./package

@@ -1,6 +1,6 @@
 {
   "name": "ocaml-wasm",
-  "version": "4.08.1-1",
+  "version": "4.08.1-3",
   "description": "OCaml runtime compiled to WebAssembly (wasi-sdk-11)",
   "main": "index.js",
   "repository": {
@@ -8,5 +8,5 @@
     "url": "git+https://github.com/corwin-of-amber/ocaml-wasm.git#wasm-4.08"
   },
   "author": "",
-  "license": "LGPL-2+"
+  "license": "LGPL-2.1"
 }

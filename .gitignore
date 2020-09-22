@@ -45,7 +45,7 @@ _build
 /wasi
 /package
 /base.zip
-/*.tar.gz
+/*.tgz
 node_modules
 
 # local to root directory
