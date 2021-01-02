@@ -1,12 +1,16 @@
 {
   "name": "ocaml-wasm",
   "version": "4.10.1",
-  "description": "OCaml runtime compiled to WebAssembly",
+  "description": "OCaml runtime compiled to WebAssembly (wasi-sdk-11)",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/corwin-of-amber/ocaml-wasm.git#wasm-4.10"
   },
   "author": "",
-  "license": "LGPL-2+"
+  "license": "LGPL-2.1-only",
+  "devDependencies": {
+    "jszip-unzip": "^3.4.0-0",
+    "wasi-kernel": "^0.1.1-rc2"
+  }
 }
