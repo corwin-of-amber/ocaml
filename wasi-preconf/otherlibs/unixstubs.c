@@ -2,6 +2,7 @@
 #include <caml/alloc.h>
 #include <caml/fail.h>
 #include <caml/callback.h>
+#include <caml/memory.h>
 
 #include <stdio.h>
 
@@ -10,9 +11,8 @@
 #endif
 
 #define CAMLprim __attribute__((used))
-#define STUB { /* trace(__func__); */ return Atom(0); }
-
-#define STUBX { err_not_implemented(); return Atom(0); }
+#define STUB { trace(__func__); err_not_implemented(__func__); return Atom(0); }
+#define STUB0 { trace(__func__); return Atom(0); }
 
 void trace(const char *func) {
     char __buf[64];
@@ -20,27 +20,33 @@ void trace(const char *func) {
     __wasi_trace(__buf);
 }
 
-void err_not_implemented() {
+void err_not_implemented(const char *func) {
+    CAMLparam0();
+    CAMLlocal2(exn, err);
+
     const value *unix_error_exn = caml_named_value("Unix.Unix_error");
-    if (unix_error_exn == NULL)
+    if (unix_error_exn == NULL) {
         caml_invalid_argument("Exception Unix.Unix_error not initialized");
+        return;
+    }
 
-    value err = caml_alloc_small(1, 0);
-    Field(err, 0) = Val_int(-1);
+    err = caml_alloc_small(1, 0);
+    Store_field(err, 0, Val_int(-1));
 
-    value name = caml_copy_string("unix");
+    value name = caml_copy_string(func),
+          arg = caml_copy_string("(not implemented)");
 
-    value res = caml_alloc_small(4, 0);
-    Field(res, 0) = *unix_error_exn;
-    Field(res, 1) = err;
-    Field(res, 2) = name;
-    Field(res, 3) = Atom(0);
-    caml_raise(res);
+    exn = caml_alloc_small(4, 0);
+    Store_field(exn, 0, *unix_error_exn);
+    Store_field(exn, 1, err);
+    Store_field(exn, 2, name);
+    Store_field(exn, 3, arg);
+    caml_raise(exn);
 }
 
 CAMLprim value unix_accept(value cloexec, value sock)    STUB
-CAMLprim value unix_access(value path, value perms)      STUBX
-CAMLprim value unix_inet_addr_of_string(value s) STUB
+CAMLprim value unix_access(value path, value perms)      STUB
+CAMLprim value unix_inet_addr_of_string(value s)         STUB0
 CAMLprim value unix_alarm(value t) STUB
 CAMLprim value unix_bind(value socket, value address) STUB
 CAMLprim value unix_inchannel_of_filedescr(value fd) STUB
@@ -95,7 +101,7 @@ CAMLprim value unix_getpwuid(value uid) STUB
 CAMLprim value unix_getservbyname(value name, value proto) STUB
 CAMLprim value unix_getservbyport(value port, value proto) STUB
 CAMLprim value unix_getsockname(value sock) STUB
-CAMLprim value unix_gettimeofday(value unit) STUB
+CAMLprim value unix_gettimeofday(value unit) STUB0
 CAMLprim value unix_getuid(value unit) STUB
 CAMLprim value unix_gmtime(value t) STUB
 CAMLprim value unix_localtime(value t) STUB
@@ -152,7 +158,7 @@ CAMLprim value unix_socketpair(value cloexec, value domain,
                                value type, value proto) STUB
 CAMLprim value unix_getsockopt(value vty, value socket, value option) STUB
 CAMLprim value unix_setsockopt(value vty, value socket, value option, value val) STUB
-CAMLprim value unix_stat(value path) STUB
+CAMLprim value unix_stat(value path) STUB0
 CAMLprim value unix_lstat(value path) STUB
 CAMLprim value unix_fstat(value fd) STUB
 CAMLprim value unix_stat_64(value path) STUB
