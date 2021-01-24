@@ -4,7 +4,7 @@
     },
     "ocamlrun": {
         "output": "ocamlrun.wasm",
-        "args": [
+        "args": ["-lwasi-emulated-signal",
             "-Wl,-allow-undefined", "-Wl,--import-table", "-Wl,--export-all"],
         "noargs": ["re:^-Wl"]
     }
