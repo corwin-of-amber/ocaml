@@ -12,7 +12,7 @@ mkdir -p package/bin
 cp *.wasm runtime/ocamlrun.wasm package/bin/
 cp package.json README.md package/
 touch package/index.js
-tar zcf $FN package
+mv `npm pack ./package` $FN
 echo $FN
 
 
@@ -24,5 +24,5 @@ mkdir -p package
 cp package.base.json package/package.json
 cp README.md base.zip package/
 touch package/index.js
-tar zcf $FN package
+mv `npm pack ./package` $FN
 echo $FN
