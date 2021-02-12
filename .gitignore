@@ -42,7 +42,7 @@ _build
 *.wa
 *.wasm
 *.wat
-*.tar.gz
+*.tgz
 /base.zip
 /package
 /wasi
