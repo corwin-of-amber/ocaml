@@ -144,11 +144,11 @@
 /* Define HAS_WAIT4 if you have wait4().
    Define HAS_WAITPID if you have waitpid(). */
 
-#define HAS_GETGROUPS 1
+// #define HAS_GETGROUPS 1
 
 /* Define HAS_GETGROUPS if you have getgroups(). */
 
-#define HAS_SETGROUPS 1
+// #define HAS_SETGROUPS 1
 
 /* Define HAS_SETGROUPS if you have setgroups(). */
 
@@ -161,7 +161,7 @@
 /* Define HAS_TERMIOS if you have /usr/include/termios.h and it is
    Posix-compliant. */
 
-#define HAS_SETITIMER 1
+// #define HAS_SETITIMER 1
 
 /* Define HAS_SETITIMER if you have setitimer(). */
 
@@ -210,7 +210,7 @@
 
 #define HAS_PWRITE 1
 
-#define HAS_NANOSECOND_STAT 1
+// #define HAS_NANOSECOND_STAT 1
 
 #define HAS_GETHOSTBYNAME_R 6
 
@@ -232,13 +232,13 @@
 
 /* Define HAS_NICE if you have nice(). */
 
-#define HAS_DUP3 1
+// #define HAS_DUP3 1
 
-#define HAS_PIPE2 1
+// #define HAS_PIPE2 1
 
 #define HAS_ACCEPT4 1
 
-#define HAS_GETAUXVAL 1
+// #define HAS_GETAUXVAL 1
 
 // #define HAS_SYS_SHM_H 1
 

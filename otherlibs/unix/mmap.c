@@ -17,7 +17,9 @@
 
 /* Needed (under Linux at least) to get pwrite's prototype in unistd.h.
    Must be defined before the first system .h is included. */
+#ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE 600
+#endif
 
 #include <stddef.h>
 #include "caml/bigarray.h"
