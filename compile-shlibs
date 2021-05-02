@@ -4,19 +4,11 @@
 
 WASI_SDK=${WASI_SDK:=/opt/wasi-sdk}
 
-
-if [ ! -d ./wasi ]
-  then wasi-kit ln -s /tmp/wasi-kit-hijack/include ./wasi
-fi
-
-CCSHARED="$WASI_SDK/bin/clang -target wasm32-unknown-emscripten --sysroot $WASI_SDK/share/wasi-sysroot -D__wasi__ -fPIC -Wl,--shared"
-CCFLAGS="-Iruntime -include wasi/etc.h"
-LDFLAGS="-nostdlib -Wl,--export-all"
-
-#$CCSHARED $CCFLAGS $LDFLAGS otherlibs/str/strstubs.c -o dllcamlstr.wasm
-$CCSHARED $CCFLAGS $LDFLAGS wasi-preconf/otherlibs/unixstubs.c -o dllunix.wasm
-$CCSHARED $CCFLAGS $LDFLAGS wasi-preconf/otherlibs/st_stubs.c -o dllthreads.wasm
+# @oops macOS specific?
+CCSHARED="clang -shared -flat_namespace -undefined suppress"
+CCFLAGS="-Iruntime"
 
 make -C otherlibs/str clean && wasi-kit make -C otherlibs/str
-# TODO
-# wasi-kit make -C otherlibs/unix
+make -C otherlibs/unix clean && wasi-kit make -C otherlibs/unix
+# threads: stubs only
+wasi-kit $CCSHARED $CCFLAGS wasi-preconf/otherlibs/st_stubs.c -o dllthreads.so

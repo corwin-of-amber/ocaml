@@ -8,15 +8,10 @@
             "-Wl,-allow-undefined", "-Wl,--import-table", "-Wl,--export-all"],
         "noargs": ["re:^-Wl"]
     },
-    "strstubs.o": {
-        "args": ["-fPIC", "--target=wasm32-unknown-emscripten", "-D__wasi__"]
-    },
-    "mmap.o": {
-        "args": ["-D_WASI_EMULATED_MMAN"]
-    },
-    "./dllcamlstr.so": {
-        "output": "dllcamlstr.wasm",
-        "args": ["-nostdlib", "-Wl,--shared", "-Wl,--export-all", 
+    "dllthreads.so": {
+        "output": "dllthreads.wasm",
+        "args": ["-fPIC", "--target=wasm32-unknown-emscripten", "-D__wasi__",
+                 "-nostdlib", "-Wl,--shared", "-Wl,--export-all", 
                  "-Wno-unused-command-line-argument"],
         "noargs": ["re:^-Wl"]
     }

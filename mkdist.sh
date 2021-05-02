@@ -9,7 +9,7 @@ FN=ocaml-wasm-$VER.tgz
 
 rm -rf package 
 mkdir -p package/bin
-cp *.wasm runtime/ocamlrun.wasm package/bin/
+cp runtime/ocamlrun.wasm *.wasm otherlibs/*/*.wasm package/bin/
 cp package.json README.md package/
 touch package/index.js
 mv `npm pack ./package` $FN
