@@ -61,7 +61,7 @@
 
 /* #undef HAS___SECURE_GETENV */
 
-#define HAS_ISSETUGID 1
+// #define HAS_ISSETUGID 1
 
 /* 2. For the Unix library. */
 
@@ -194,7 +194,7 @@
 /* Define HAS_LOCALE_H if you have the include file <locale.h> and the
    uselocale() function. */
 
-#define HAS_XLOCALE_H 1
+// #define HAS_XLOCALE_H 1
 
 /* Define HAS_XLOCALE_H if you have the include file <xlocale.h> and the
    uselocale() function. */

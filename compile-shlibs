@@ -4,8 +4,11 @@
 
 WASI_SDK=${WASI_SDK:=/opt/wasi-sdk}
 
-# @oops macOS specific?
-CCSHARED="clang -shared -flat_namespace -undefined suppress"
+# @oops
+case `uname` in
+  Darwin) CCSHARED="clang -shared -flat_namespace -undefined suppress" ;;
+  *)      CCSHARED="clang -shared -fPIC" ;;
+esac
 CCFLAGS="-Iruntime"
 
 make -C otherlibs/str clean && wasi-kit make -C otherlibs/str
