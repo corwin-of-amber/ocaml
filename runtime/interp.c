@@ -212,6 +212,10 @@ static intnat caml_bcodcount;
 #ifdef __wasi__
 #include <alloca.h>
 #include <wasi/control.h>
+#else
+/* these are there only for `__control_setjmp` (wasi-kernel) */
+#undef __block
+#define __block
 #endif
 
 /* The interpreter itself */
@@ -230,8 +234,6 @@ value caml_interprete(code_t prog, asize_t prog_size)
   register code_t pc;
   register value * sp;
   register value accu;
-#undef __block
-#define __block
 #endif
 #if defined(THREADED_CODE) && defined(ARCH_SIXTYFOUR) && !defined(ARCH_CODE32)
 #ifdef JUMPTBL_BASE_REG
